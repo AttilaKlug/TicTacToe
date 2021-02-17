@@ -1,0 +1,67 @@
+apply plugin: 'java'
+apply plugin: 'eclipse-wtp'
+
+compileJava.options.encoding = 'UTF-8'
+compileTestJava.options.encoding = "UTF-8"
+
+group = 'hu.mydomain'
+version = '1.0.0'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+
+	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot
+    compile group: 'org.springframework.boot', name: 'spring-boot', version: '2.0.6.RELEASE'
+    
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-web
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '2.0.6.RELEASE'
+    
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter', version: '2.0.6.RELEASE'
+    
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-jdbc
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-jdbc', version: '2.0.6.RELEASE'
+    
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-thymeleaf
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf', version: '2.0.6.RELEASE'
+    
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.12.1'
+    
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '2.0.6.RELEASE'
+    
+    // https://mvnrepository.com/artifact/org.hibernate/hibernate-core
+    implementation group: 'org.hibernate', name: 'hibernate-core', version: '4.1.4.Final'
+    
+    // https://mvnrepository.com/artifact/org.hibernate/hibernate-entitymanager
+    implementation group: 'org.hibernate', name: 'hibernate-entitymanager', version: '5.2.3.Final'
+    
+    // https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api
+    implementation group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.0'
+    
+    // https://mvnrepository.com/artifact/com.microsoft.sqlserver/mssql-jdbc    
+    implementation group: 'com.microsoft.sqlserver', name: 'mssql-jdbc', version: '8.2.2.jre8'
+
+}
+
+test {
+	useJUnitPlatform()
+}
+
+task('osDetect'){
+
+    if ( System.properties['java.vm.name'].contains('64') )
+        ext.arch = 'x64'
+    else
+        ext.arch = 'x32'
+    
+    if ( System.properties['os.name'].toLowerCase().contains('windows') )
+        ext.os = "win"
+    else
+        ext.os = "lin"
+    
+    println ("Detected JAVA: " + ext.os + "-" + ext.arch + "-" + System.properties["java.version"])
+}
